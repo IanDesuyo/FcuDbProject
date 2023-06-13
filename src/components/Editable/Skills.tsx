@@ -48,7 +48,7 @@ const EditableSkills: React.FC<Props> = ({ userId }) => {
   const isLoading = update.isLoading || remove.isLoading || add.isLoading;
 
   return (
-    <div className="grid gap-2 rounded-xl bg-base-200 p-4">
+    <div className="grid gap-2 rounded-xl bg-base-200 p-4 shadow-xl">
       <div>
         <h2 className="flex items-center gap-2 text-xl font-bold">專長</h2>
         <p className=" text-sm text-base-content text-opacity-60"></p>
@@ -57,9 +57,10 @@ const EditableSkills: React.FC<Props> = ({ userId }) => {
       <div className="flex flex-col gap-4">
         {data?.map((skill) => (
           <form
-            className="flex flex-row items-end justify-between gap-4"
+            className="flex max-w-full flex-row items-end justify-between gap-4"
             key={skill.id}
             onSubmit={(e) => handleEdit(skill.id, e)}
+            onBlur={(e) => handleEdit(skill.id, e)}
           >
             <div className="flex gap-2">
               <DataInput
@@ -80,9 +81,9 @@ const EditableSkills: React.FC<Props> = ({ userId }) => {
               />
             </div>
             <div className="btn-group">
-              <button className="btn" type="submit" disabled={isLoading}>
-                修改
-              </button>
+              {/* <button className="btn" type="submit" disabled={isLoading}>
+                儲存
+              </button> */}
               <button
                 className="btn-error btn"
                 onClick={() => handleDelete(skill.id)}
@@ -101,7 +102,7 @@ const EditableSkills: React.FC<Props> = ({ userId }) => {
         <button className="collapse-title text-left">新增</button>
         <div className="collapse-content">
           <form
-            className="flex flex-row items-end justify-between gap-4"
+            className="flex max-w-full flex-row items-end justify-between gap-4"
             onSubmit={handleAdd}
           >
             <div className="flex gap-2">

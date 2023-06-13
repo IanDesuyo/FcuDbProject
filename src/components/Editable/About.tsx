@@ -25,8 +25,9 @@ const EditableAbout: React.FC<Props> = ({ userId }) => {
 
   return (
     <form
-      className="grid gap-2 rounded-xl bg-base-200 p-4"
+      className="grid gap-2 rounded-xl bg-base-200 p-4 shadow-xl"
       onSubmit={(e) => void handler(e)}
+      onBlur={(e) => void handler(e)}
     >
       <div>
         <h2 className="flex items-center gap-2 text-xl font-bold">個人資料</h2>
@@ -100,11 +101,11 @@ const EditableAbout: React.FC<Props> = ({ userId }) => {
           istextarea
         />
       </div>
-      <div className="flex justify-end">
-        <button className="btn-primary btn" type="submit" disabled={isLoading}>
+      {/* <div className="flex justify-end">
+        <button className="btn" type="submit" disabled={isLoading}>
           儲存
         </button>
-      </div>
+      </div> */}
     </form>
   );
 };

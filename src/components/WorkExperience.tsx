@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { api } from "~/utils/api";
 
 type Props = {
@@ -20,7 +19,7 @@ const WorkExperience: React.FC<Props> = ({ userId }) => {
               .filter((x) => x.in_school)
               .map((ex) => (
                 <p key={ex.id}>
-                  {ex.in_school} ({ex.position})
+                  {ex.company} ({ex.position})
                 </p>
               ))}
         </div>
@@ -35,7 +34,7 @@ const WorkExperience: React.FC<Props> = ({ userId }) => {
               .filter((x) => !x.in_school)
               .map((ex) => (
                 <p key={ex.id}>
-                  {ex.company} {ex.position}
+                  {ex.company} ({ex.position})
                 </p>
               ))}
         </div>

@@ -1,5 +1,5 @@
 import DataInput from "./DataInput";
-import { type editableSkillsSchema } from "~/utils/schema";
+import { type editableWorkExperienceSchema } from "~/utils/schema";
 import { api } from "~/utils/api";
 
 type Props = {
@@ -8,13 +8,13 @@ type Props = {
 
 const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
   const { data, refetch } = api.user.workExperience.useQuery(userId);
-  const update = api.user.updateSkills.useMutation({
+  const update = api.user.updateWorkExperience.useMutation({
     onSuccess: () => refetch(),
   });
-  const remove = api.user.removeSkills.useMutation({
+  const remove = api.user.removeWorkExperience.useMutation({
     onSuccess: () => refetch(),
   });
-  const add = api.user.addSkills.useMutation({
+  const add = api.user.addWorkExperience.useMutation({
     onSuccess: () => refetch(),
   });
 
@@ -24,7 +24,11 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(
       formData.entries()
-    ) as typeof editableSkillsSchema._type;
+    ) as unknown as typeof editableWorkExperienceSchema._type;
+
+    data.in_school = formData.get("in_school") === "on";
+
+    console.log(data);
 
     update.mutate({ id, ...data });
   };
@@ -39,7 +43,9 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(
       formData.entries()
-    ) as typeof editableSkillsSchema._type;
+    ) as unknown as typeof editableWorkExperienceSchema._type;
+
+    data.in_school = formData.get("in_school") === "on";
 
     add.mutate(data);
     e.currentTarget.reset();
@@ -48,7 +54,7 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
   const isLoading = update.isLoading || remove.isLoading || add.isLoading;
 
   return (
-    <div className="grid gap-2 rounded-xl bg-base-200 p-4">
+    <div className="grid gap-2 rounded-xl bg-base-200 p-4 shadow-xl">
       <div>
         <h2 className="flex items-center gap-2 text-xl font-bold">經歷</h2>
         <p className=" text-sm text-base-content text-opacity-60"></p>
@@ -57,17 +63,17 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
       <div className="flex flex-col gap-4">
         {data?.map((workExperience) => (
           <form
-            className="flex flex-row items-end justify-between gap-4"
+            className="flex max-w-full flex-row items-end justify-between gap-4"
             key={workExperience.id}
             onSubmit={(e) => handleEdit(workExperience.id, e)}
+            onBlur={(e) => handleEdit(workExperience.id, e)}
           >
             <div className="flex gap-2">
               <DataInput
                 name="in_school"
                 label="校內經歷"
-                defaultValue={workExperience.in_school ?"true":"false"}
+                defaultChecked={workExperience.in_school}
                 type="checkbox"
-                required
                 className="checkbox"
               />
               <DataInput
@@ -78,7 +84,7 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
                 type="text"
                 required
               />
-              
+
               <DataInput
                 name="position"
                 label="職位"
@@ -89,9 +95,9 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
               />
             </div>
             <div className="btn-group">
-              <button className="btn" type="submit" disabled={isLoading}>
-                修改
-              </button>
+              {/* <button className="btn" type="submit" disabled={isLoading}>
+                儲存
+              </button> */}
               <button
                 className="btn-error btn"
                 onClick={() => handleDelete(workExperience.id)}
@@ -110,15 +116,14 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
         <button className="collapse-title text-left">新增</button>
         <div className="collapse-content">
           <form
-            className="flex flex-row items-end justify-between gap-4"
+            className="flex max-w-full flex-row items-end justify-between gap-4"
             onSubmit={handleAdd}
           >
             <div className="flex gap-2">
-            <DataInput
+              <DataInput
                 name="in_school"
                 label="校內經歷"
                 type="checkbox"
-                required
                 className="checkbox"
               />
               <DataInput
@@ -128,7 +133,7 @@ const EditableWorkExperience: React.FC<Props> = ({ userId }) => {
                 type="text"
                 required
               />
-              
+
               <DataInput
                 name="position"
                 label="職位"

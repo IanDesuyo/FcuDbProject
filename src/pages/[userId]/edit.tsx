@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import EditableAbout from "~/components/Editable/About";
 import EditableEducation from "~/components/Editable/Education";
+import EditableProjects from "~/components/Editable/Projects";
 import EditableSkills from "~/components/Editable/Skills";
 import EditableWorkExperience from "~/components/Editable/WorkExperience";
 import Navbar from "~/components/Navbar";
@@ -22,9 +23,9 @@ const UserPage: NextPage = () => {
     return <p>404</p>;
   }
 
-  // if (authStatus !== "authenticated" || sessionData?.user?.id !== userId) {
-  //   return <p>403</p>;
-  // }
+  if (authStatus !== "authenticated" || sessionData?.user?.id !== userId) {
+    return <p>403</p>;
+  }
 
   return (
     <>
@@ -35,11 +36,12 @@ const UserPage: NextPage = () => {
       </Head>
       <Navbar userId={userId} />
       <main className="flex w-full justify-center">
-        <div className="container flex flex-col gap-4 px-2">
+        <div className="container flex flex-col gap-8 px-2">
           <EditableAbout userId={userId} />
           <EditableEducation userId={userId} />
           <EditableSkills userId={userId} />
           <EditableWorkExperience userId={userId} />
+          <EditableProjects userId={userId} />
         </div>
       </main>
     </>

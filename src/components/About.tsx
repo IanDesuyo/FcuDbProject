@@ -25,7 +25,7 @@ const About: React.FC<Props> = ({ userId }) => {
           <p className="whitespace-pre-line">{data?.bio}</p>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {data?.email && (
             <Link
               className="btn-outline btn-primary btn lowercase"
@@ -44,15 +44,13 @@ const About: React.FC<Props> = ({ userId }) => {
           )}
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <picture className=" w-auto">
-          <img
-            src={data?.image || "/images/avatar.png"}
-            className=" rounded-2xl"
-            alt="Avatar"
-          />
-        </picture>
-      </div>
+      <picture className="flex items-center justify-center">
+        <img
+          src={data?.image || "/images/avatar.png"}
+          className="max-h-96 w-auto rounded-2xl duration-300 hover:scale-105"
+          alt="Avatar"
+        />
+      </picture>
     </div>
   );
 };

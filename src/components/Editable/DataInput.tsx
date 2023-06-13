@@ -1,10 +1,13 @@
 interface DataInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   istextarea?: boolean;
-  isCheckbox?: boolean;
 }
 
-const DataInput: React.FC<DataInputProps> = ({ label, ...props }) => {
+const DataInput: React.FC<DataInputProps> = ({
+  label,
+  istextarea = false,
+  ...props
+}) => {
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -13,7 +16,7 @@ const DataInput: React.FC<DataInputProps> = ({ label, ...props }) => {
           {props.required && <span className="text-red-500">*</span>}
         </span>
       </label>
-      {props.istextarea ? (
+      {istextarea ? (
         <textarea
           className="textarea-bordered textarea w-full"
           {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}

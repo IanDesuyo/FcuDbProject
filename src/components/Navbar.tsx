@@ -9,6 +9,7 @@ type Props = {
 
 const Navbar: React.FC<Props> = ({ userId }) => {
   const { status, data: sessionData } = useSession();
+  console.log(sessionData)
   const { data } = api.user.info.useQuery(userId);
 
   const router = useRouter();
@@ -24,7 +25,7 @@ const Navbar: React.FC<Props> = ({ userId }) => {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
-              {status === "authenticated" &&
+              {status === "authenticated" &&(
               sessionData.user.id === userId &&
               router.pathname.endsWith("/edit") ? (
                 <Link className="btn-primary btn" href={`/${userId}`}>
@@ -34,7 +35,7 @@ const Navbar: React.FC<Props> = ({ userId }) => {
                 <Link className="btn-primary btn" href={`/${userId}/edit`}>
                   修改
                 </Link>
-              )}
+              ))}
             </li>
           </ul>
         </div>

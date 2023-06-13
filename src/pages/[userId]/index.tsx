@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import About from "~/components/About";
 import Education from "~/components/Education";
 import Navbar from "~/components/Navbar";
+import Projects from "~/components/Projects";
 import Skills from "~/components/Skills";
 import WorkExperience from "~/components/WorkExperience";
 import { api } from "~/utils/api";
@@ -29,7 +30,7 @@ const UserPage: NextPage = () => {
       </Head>
       <Navbar userId={userId} />
       <main className="flex w-full justify-center">
-        <div className="container px-2 flex flex-col gap-4">
+        <div className="container flex flex-col gap-4 px-2">
           <About userId={userId} />
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -37,6 +38,7 @@ const UserPage: NextPage = () => {
             <Skills userId={userId} />
           </div>
           <WorkExperience userId={userId} />
+          <Projects userId={userId} />
         </div>
       </main>
     </>
